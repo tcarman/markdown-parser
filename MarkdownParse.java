@@ -11,13 +11,27 @@ public class MarkdownParse {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then read link upto next )
         int currentIndex = 0;
+        if(!markdown.contains("[") || !markdown.contains("]") ||
+            !markdown.contains("(")|| !markdown.contains(")")){
+            return toReturn;
+        }   
         while(currentIndex < markdown.length()) {
-            int openBracket = markdown.indexOf("[", currentIndex);
-            int closeBracket = markdown.indexOf("]", openBracket);
-            int openParen = markdown.indexOf("(", closeBracket);
-            int closeParen = markdown.indexOf(")", openParen);
-            toReturn.add(markdown.substring(openParen + 1, closeParen));
-            currentIndex = closeParen + 1;
+
+                int openBracket = markdown.indexOf("[", currentIndex);
+                int closeBracket = markdown.indexOf("]", openBracket);
+                int openParen = markdown.indexOf("(", closeBracket);
+                int closeParen = markdown.indexOf(")", openParen);
+                if(closeBracket + 1 == openParen){
+                    if((markdown.contains("!") && !(markdown.indexOf("!",currentIndex) == openBracket - 1))
+                        ||!markdown.contains("!")){
+                        toReturn.add(markdown.substring(openParen + 1, closeParen));
+                    }
+                }
+                currentIndex = closeParen + 1;
+                if(!markdown.substring(closeParen).contains("[") || !markdown.substring(closeParen).contains("]") ||
+                    !markdown.substring(closeParen).contains("(")|| !markdown.substring(closeParen).contains(")")){
+                    break;
+                }
         }
 
         return toReturn;
