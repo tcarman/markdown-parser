@@ -12,25 +12,25 @@ public class MarkdownParse {
         // find the next [, then find the ], then find the (, then read link upto next )
         int currentIndex = 0;
         if(!markdown.contains("[") || !markdown.contains("]") ||
-            !markdown.contains("(")|| !markdown.contains(")")){
+            !markdown.contains("(")|| !markdown.contains(")")){ //makes sure all needed charcaters for a link are in the text file
             return toReturn;
         }   
         while(currentIndex < markdown.length()) {
 
                 int openBracket = markdown.indexOf("[", currentIndex);
                 int closeBracket = markdown.indexOf("]", openBracket);
-                int openParen = markdown.indexOf("(", closeBracket);
+                int openParen = markdown.indexOf("(", currentIndex);
                 int closeParen = markdown.indexOf(")", openParen);
-                if(closeBracket + 1 == openParen){
+                if(closeBracket + 1 == openParen){ //makes sure the hyperlink is next to the url, making it a valid link
                     if((markdown.contains("!") && !(markdown.indexOf("!",currentIndex) == openBracket - 1))
-                        ||!markdown.contains("!")){
+                        ||!markdown.contains("!")){ //makes sure it is not an image
                         toReturn.add(markdown.substring(openParen + 1, closeParen));
                     }
                 }
                 currentIndex = closeParen + 1;
                 if(!markdown.substring(closeParen).contains("[") || !markdown.substring(closeParen).contains("]") ||
                     !markdown.substring(closeParen).contains("(")|| !markdown.substring(closeParen).contains(")")){
-                    break;
+                    break; //fixes the extra line bug
                 }
         }
 
