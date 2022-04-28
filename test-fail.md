@@ -1,2 +1,2 @@
-[testing?](success)
+[testing?](fail.yes)
 ![test](fail)
