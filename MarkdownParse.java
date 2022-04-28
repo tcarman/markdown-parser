@@ -11,8 +11,7 @@ public class MarkdownParse {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then read link upto next )
         int currentIndex = 0;
-        String[] linkEnders = {".com",".org",".edu",".net",".gov",".html",".k12",".mil"};
-        boolean isLink = false;
+        String[] linkEnders = {".com",".org",".edu",".net",".gov",".io",".k12",".mil",".uk",".ca"};
         if(!markdown.contains("[") || !markdown.contains("]") ||
             !markdown.contains("(")|| !markdown.contains(")")){ //makes sure all needed charcaters for a link are in the text file
             return toReturn;
@@ -29,12 +28,11 @@ public class MarkdownParse {
                         String link =  markdown.substring(openParen + 1, closeParen);
                         for(int i = 0; i < linkEnders.length; i++){
                             if(link.contains(linkEnders[i])){
-                                isLink = true;
-                                break;
+                                if(link.indexOf(linkEnders[i]) != 0){
+                                    toReturn.add(markdown.substring(openParen + 1, closeParen));
+                                    break;
+                                }
                             }
-                        }
-                        if(isLink){
-                            toReturn.add(markdown.substring(openParen + 1, closeParen));
                         }
                     }
                 }
