@@ -47,4 +47,12 @@ public class MarkdownParseTest { //class initalizer
         result.add("https://docs.google.com/document/d/1LnSfvTG_Hn2fxDtFMuhBhJqsf9336Bm1ljux2Af9FqE/edit?pli=1");
         assertEquals(result, links);
     }
+    @Test
+    public void failTest() throws IOException{
+        Path fileName = Path.of("linkTest.md");
+        String content = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(content);
+        ArrayList<String> result = new ArrayList<String>();
+        assertEquals(result, links);
+    }
 }
