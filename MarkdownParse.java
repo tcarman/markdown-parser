@@ -27,11 +27,9 @@ public class MarkdownParse {
                         ||!markdown.contains("!")){ //makes sure it is not an image
                         String link =  markdown.substring(openParen + 1, closeParen);
                         for(int i = 0; i < linkEnders.length; i++){
-                            if(link.contains(linkEnders[i])){
-                                if(link.indexOf(linkEnders[i]) != 0){
+                            if(link.contains(linkEnders[i]) && link.indexOf(linkEnders[i]) != 0){
                                     toReturn.add(markdown.substring(openParen + 1, closeParen));
                                     break;
-                                }
                             }
                         }
                     }
