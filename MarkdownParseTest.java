@@ -5,11 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class MarkdownParseTest { //class initalizer
-    @Test //marks the next method as a test and thus places it in the junit tester package
-    public void addition() { //method header
-        assertEquals(2, 1 + 1); //compares the two inputs and returns an .equals() boolean
+public class MarkdownParseTest { // class initalizer
+    @Test // marks the next method as a test and thus places it in the junit tester
+          // package
+    public void addition() { // method header
+        assertEquals(2, 1 + 1); // compares the two inputs and returns an .equals() boolean
     }
+
     @Test
     public void testFile() throws IOException {
         Path fileName = Path.of("test-file.md");
@@ -17,18 +19,20 @@ public class MarkdownParseTest { //class initalizer
         ArrayList<String> links = MarkdownParse.getLinks(content);
         ArrayList<String> result = new ArrayList<String>();
         result.add("https://something.com");
-        //result.add("some-thing.html");
+        // result.add("some-thing.html");
         assertEquals(result, links);
     }
+
     @Test
     public void testFail() throws IOException {
         Path fileName = Path.of("test-fail.md");
         String content = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(content);
         ArrayList<String> result = new ArrayList<String>();
-        //result.add("success.yes");
+        // result.add("success.yes");
         assertEquals(result, links);
     }
+
     @Test
     public void testFalure() throws IOException {
         Path fileName = Path.of("test-failure.md");
@@ -37,6 +41,7 @@ public class MarkdownParseTest { //class initalizer
         ArrayList<String> result = new ArrayList<String>();
         assertEquals(result, links);
     }
+
     @Test
     public void linkTest() throws IOException {
         Path fileName = Path.of("linkTest.md");
@@ -47,12 +52,48 @@ public class MarkdownParseTest { //class initalizer
         result.add("https://docs.google.com/document/d/1LnSfvTG_Hn2fxDtFMuhBhJqsf9336Bm1ljux2Af9FqE/edit?pli=1");
         assertEquals(result, links);
     }
+
     @Test
-    public void testEmpty() throws IOException{
+    public void testEmpty() throws IOException {
         Path fileName = Path.of("noLink.md");
         String content = Files.readString(fileName);
         ArrayList<String> links = MarkdownParse.getLinks(content);
         ArrayList<String> result = new ArrayList<String>();
+        assertEquals(result, links);
+    }
+
+    @Test
+    public void testSnippet1() throws IOException {
+        Path fileName = Path.of("snippet1.md");
+        String content = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(content);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("url.com");
+        result.add("`google.com");
+        result.add("google.com");
+        assertEquals(result, links);
+    }
+
+    @Test
+    public void testSnippet2() throws IOException {
+        Path fileName = Path.of("snippet2.md");
+        String content = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(content);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("a.com");
+        result.add("a.com((");
+        assertEquals(result, links);
+    }
+
+    @Test
+    public void testSnippet3() throws IOException {
+        Path fileName = Path.of("snippet3.md");
+        String content = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(content);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("https://www.twitter.com");
+        result.add("https://sites.google.com/eng.ucsd.edu/cse-15l-spring-2022/schedule");
+        result.add("https://cse.ucsd.edu/");
         assertEquals(result, links);
     }
 }
